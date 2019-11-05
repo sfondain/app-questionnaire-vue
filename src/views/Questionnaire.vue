@@ -3,10 +3,11 @@
     <h3>Bienvenue {{prenom}} {{nom}} de la société {{nomSociete}}</h3>
     <div id="question-component">
       <question :question="questions[counter]" @choice="choice = $event"></question>
-      <b-button v-if="canNextQuestion" block variant="outline-info" class="connectButton" @click="nextQuestion"><b>Question
+      <b-button v-if="autreQuestion" block variant="outline-info" class="boutonConnexion" @click="questSuivante"><b>Question
         suivante</b>
       </b-button>
-      <b-button v-else block variant="outline-success" class="connectButton" @click="testFinish">Terminer le test</b-button>
+      <b-button v-else block variant="outline-success" class="boutonConnexion" @click="testFini">Terminer le test</b-button>
+      <div class="erreur" v-if="erreur">Veuillez sélectionner une réponse</div>
     </div>
   </div>
 </template>
@@ -26,26 +27,67 @@
         nomSociete: this.$route.query.nomSociete,
         questions: questionsJSON.questions,
         counter: 0,
-        canNextQuestion: true,
+        autreQuestion: true,
         choice: "",
-        first: true
+        premier: true,
+        resultats:[],
+        score:0,
+        erreur: false
       }
     },
     created() {
-      this.nextQuestion()
+      this.questSuivante()
     },
     methods: {
-      nextQuestion() {
-        if (this.first) {
-          this.first = false
-        } else {
-          this.counter++
+      questSuivante() {
+        if (this.choice != "" || this.premier) {
+          this.erreur = false
+          if (this.premier) {
+            this.premier = false
+          } else {
+            let res = {
+              'question': this.questions[this.counter],
+              'choice': this.choice
+            }
+            this.resultats.push(res)
+            this.isGoodAnswer()
+            this.counter++
+          }
+          if (!this.questions[this.counter + 1]) {
+            this.autreQuestion = false
+          }
+            this.choice = ""
+          } else {
+            this.erreur = true
+          }
+        },
+      testFini() {
+        if (this.choice != "") {
+          let res = {
+            'question': this.questions[this.counter],
+            'choice': this.choice
+          }
+          this.resultats.push(res)
+          this.isGoodAnswer()
+          this.$router.push({
+            path: 'score',
+            query: {
+              resultats: this.resultats,
+              nom: this.nom,
+              prenom: this.prenom,
+              societe: this.nomSociete,
+              score: this.score
+            }
+          })
         }
-        if (!this.questions[this.counter + 1]) {
-          this.canNextQuestion = false
+        else{
+            this.erreur = true
         }
       },
-      testFinish() {
+      isGoodAnswer() {
+        if (this.questions[this.counter].reponseExacte === this.choice) {
+          this.score++
+        }
       }
     }
   }
@@ -70,8 +112,14 @@
     grid-row: 2/4;
     grid-column: 2/4;
   }
-  .connectButton {
+  .boutonConnexion {
     height: 20%;
+  }
+  .erreur{
+    color:red;
+    grid-column: 2/4;
+    margin:auto;
+    text-align: center;
   }
 
 </style>

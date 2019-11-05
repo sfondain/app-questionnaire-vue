@@ -7,16 +7,8 @@
         "Jean-Pierre Papin",
         "Zinédine Zidane",
         "Michel Platini"
-      ]
-    },
-    {
-      "question": "Sur quel score s'est imposé l'équipe de France lors de la finale de la Coupe du Monde 1998 ?",
-      "type": "radio",
-      "choix": [
-        "3-0",
-        "1-0",
-        "2-1"
-      ]
+      ],
+      "reponseExacte": "Michel Platini"
     },
     {
       "question": "Quel est le club le plus titré de Ligue 1 ?",
@@ -25,7 +17,18 @@
         "L'AS Saint-Étienne",
         "Le Paris-Saint-Germain",
         "L'Olympique de Marseille"
-      ]
+      ],
+      "reponseExacte": "L'AS Saint-Étienne"
+    },
+    {
+      "question": "Sur quel score s'est imposé l'équipe de France lors de la finale de la Coupe du Monde 1998 ?",
+      "type": "radio",
+      "choix": [
+        "3-0",
+        "1-0",
+        "2-1"
+      ],
+      "reponseExacte": "3-0"
     },
     {
       "question": "Quel est le seul club français a avoir remporté la Ligue Des Champions ?",
@@ -34,7 +37,8 @@
         "Le Paris-Saint-Germain",
         "L'AS Monaco",
         "L'Olympique de Marseille"
-      ]
+      ],
+      "reponseExacte": "L'Olympique de Marseille"
     },
     {
       "question": "Sur quel score s'est terminé la plus large victoire en Coupe de France ?",
@@ -43,7 +47,8 @@
         "13-1",
         "8-0",
         "11-2"
-      ]
+      ],
+      "reponseExacte": "8-0"
     }
   ]
 }
